@@ -1,7 +1,7 @@
 package com.headsteal;
 
 import com.headsteal.listeners.HeadListeners;
-import com.headsteal.obj.impl.BatAbility;
+import com.headsteal.obj.impl.passive.BatAbility;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

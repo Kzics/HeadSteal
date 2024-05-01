@@ -1,11 +1,10 @@
-package com.headsteal.obj.impl;
+package com.headsteal.obj.impl.passive;
 
 import com.headsteal.obj.HeadAbility;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.event.block.Action;
 
-public class FrogAbility extends HeadAbility {
+public class BatAbility extends HeadAbility {
     @Override
     protected boolean isPassive() {
         return true;
@@ -13,17 +12,21 @@ public class FrogAbility extends HeadAbility {
 
     @Override
     public void apply(Player player) {
-        PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP, 1000000, 3);
-        player.getActivePotionEffects().add(potionEffect);
+        player.setAllowFlight(true);
     }
 
     @Override
     public void remove(Player player) {
-        player.removePotionEffect(PotionEffectType.JUMP);
+        player.setAllowFlight(false);
     }
 
     @Override
     public void onPlayerHit(Player attacker, Player target) {
         // Do nothing
+    }
+
+    @Override
+    public void onInteract(Player player, Action action) {
+
     }
 }
