@@ -3,6 +3,7 @@ package com.headsteal.obj.impl.passive;
 import com.headsteal.HeadsManager;
 import com.headsteal.PassiveAbility;
 import com.headsteal.obj.HeadAbility;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.potion.PotionEffect;
@@ -12,6 +13,7 @@ public class PutterFishAbility extends HeadAbility {
 
     private final HeadsManager headsManager;
     public PutterFishAbility(HeadsManager headsManager){
+        super(EntityType.PUFFERFISH);
         this.headsManager = headsManager;
     }
 

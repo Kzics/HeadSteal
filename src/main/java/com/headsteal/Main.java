@@ -1,7 +1,8 @@
 package com.headsteal;
 
 import com.headsteal.listeners.HeadListeners;
-import com.headsteal.obj.impl.passive.BatAbility;
+import com.headsteal.obj.impl.active.*;
+import com.headsteal.obj.impl.passive.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -18,7 +19,24 @@ public class Main extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
         headsManager = new HeadsManager();
-        headsManager.addAbility(EntityType.BAT, new BatAbility());
+        headsManager.addAbilities(
+                new BatAbility(),
+                new ChickenAbility(),
+                new DolphinAbility(),
+                new FrogAbility(),
+                new GolemAbility(),
+                new PiglinBruteAbility(),
+                new PutterFishAbility(headsManager),
+                new RavengerAbility(),
+                new SalmonAbility(),
+                new BlazeAbility(),
+                new BreezeAbility(),
+                new CreeperAbility(),
+                new EnderDragonAbility(),
+                new EndermanAbility(),
+                new SpiderAbility(),
+                new WardenAbility(),
+                new WitherAbility());
 
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new HeadListeners(headsManager), this);

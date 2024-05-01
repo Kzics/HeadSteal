@@ -2,13 +2,13 @@ package com.headsteal.obj.impl.active;
 
 import com.headsteal.obj.HeadAbility;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.WitherSkull;
 import org.bukkit.event.block.Action;
 
-public class BlazeAbility extends HeadAbility {
-    public BlazeAbility() {
-        super(EntityType.BLAZE);
+public class WitherAbility extends HeadAbility {
+    public WitherAbility() {
+        super(EntityType.WITHER);
     }
 
     @Override
@@ -40,8 +40,9 @@ public class BlazeAbility extends HeadAbility {
             return;
         }
 
-        Fireball fireball = player.launchProjectile(Fireball.class);
-        fireball.setDirection(player.getLocation().getDirection());
-        fireball.setYield(3);
+        WitherSkull witherSkull = player.launchProjectile(WitherSkull.class);
+        witherSkull.setDirection(player.getLocation().getDirection());
+        witherSkull.setYield(3);
+
     }
 }

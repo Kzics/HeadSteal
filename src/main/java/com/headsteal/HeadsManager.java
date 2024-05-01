@@ -27,6 +27,12 @@ public class HeadsManager {
         return null;
     }
 
+    public void addAbilities(HeadAbility... abilities){
+        for(HeadAbility ability : abilities){
+            addAbility(ability.getEntityType(), ability);
+        }
+    }
+
     public void addAbility(EntityType type, HeadAbility ability){
         abilities.put(type, ability);
     }

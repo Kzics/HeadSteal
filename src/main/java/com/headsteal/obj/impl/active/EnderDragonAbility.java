@@ -3,11 +3,16 @@ package com.headsteal.obj.impl.active;
 import com.headsteal.obj.HeadAbility;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.util.Vector;
 
 public class EnderDragonAbility extends HeadAbility {
+    public EnderDragonAbility() {
+        super(EntityType.ENDER_DRAGON);
+    }
+
     @Override
     protected boolean isPassive() {
         return false;

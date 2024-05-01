@@ -1,11 +1,16 @@
 package com.headsteal.obj.impl.active;
 
 import com.headsteal.obj.HeadAbility;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.block.Action;
 
 public class CreeperAbility extends HeadAbility {
+    public CreeperAbility() {
+        super(EntityType.CREEPER);
+    }
+
     @Override
     protected boolean isPassive() {
         return false;

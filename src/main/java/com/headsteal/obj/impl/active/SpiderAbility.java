@@ -5,11 +5,16 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.util.Vector;
 
 public class SpiderAbility extends HeadAbility {
+    public SpiderAbility() {
+        super(EntityType.SPIDER);
+    }
+
     @Override
     protected boolean isPassive() {
         return false;

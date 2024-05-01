@@ -4,11 +4,16 @@ import com.headsteal.obj.HeadAbility;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.util.Vector;
 
 public class EndermanAbility extends HeadAbility {
+    public EndermanAbility() {
+        super(EntityType.ENDERMAN);
+    }
+
     @Override
     protected boolean isPassive() {
         return false;

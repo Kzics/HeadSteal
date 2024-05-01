@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -40,6 +41,21 @@ public class HeadListeners implements Listener {
         ability.onPlayerHit(player, victim);
     }
 
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event){
+        ItemStack item = event.getItem();
+        if(item == null) return;
+        if(item.getItemMeta() == null) return;
+
+        ItemMeta meta = item.getItemMeta();
+        if(!meta.getPersistentDataContainer().has(HeadItem.headKey, PersistentDataType.STRING)) return;
+
+        EntityType type = EntityType.valueOf(meta.getPersistentDataContainer().get(HeadItem.headKey, PersistentDataType.STRING));
+        HeadAbility ability = headsManager.getAbility(type);
+
+        ability.onInteract(event.getPlayer(), event.getAction());
+
+    }
 
     @EventHandler
     public void onEquip(InventoryClickEvent event){

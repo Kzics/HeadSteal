@@ -1,5 +1,6 @@
 package com.headsteal.obj;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 
@@ -8,6 +9,15 @@ import java.util.Map;
 import java.util.UUID;
 
 public abstract class HeadAbility {
+
+    protected final EntityType entityType;
+    public HeadAbility(EntityType entityType) {
+        this.entityType = entityType;
+    }
+
+    public EntityType getEntityType() {
+        return entityType;
+    }
 
     protected Map<UUID, Long> cooldowns = new HashMap<>();
     protected int cooldownTimeInSeconds = 5;
@@ -29,4 +39,8 @@ public abstract class HeadAbility {
         cooldowns.put(playerId, currentTime + cooldownTimeInSeconds * 1000L);
         return true;
     }
+
+
+
+
 }

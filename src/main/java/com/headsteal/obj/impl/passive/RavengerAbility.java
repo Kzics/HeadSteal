@@ -4,12 +4,11 @@ import com.headsteal.obj.HeadAbility;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
-public class ChickenAbility extends HeadAbility {
-    public ChickenAbility() {
-        super(EntityType.CHICKEN);
+public class RavengerAbility extends HeadAbility {
+    public RavengerAbility() {
+        super(EntityType.RAVAGER);
     }
 
     @Override
@@ -19,19 +18,21 @@ public class ChickenAbility extends HeadAbility {
 
     @Override
     public void apply(Player player) {
-        PotionEffect effect = new PotionEffect(PotionEffectType.SLOW_FALLING, 1000000, 2, false, false, false);
-        player.getActivePotionEffects().add(effect);
+
     }
 
     @Override
     public void remove(Player player) {
-        player.removePotionEffect(PotionEffectType.SLOW_FALLING);
+
     }
 
     @Override
     public void onPlayerHit(Player attacker, Player target) {
-
+        Vector direction = target.getLocation().subtract(attacker.getLocation()).toVector();
+        direction.normalize().multiply(20);
+        target.setVelocity(direction);
     }
+
 
     @Override
     public void onInteract(Player player, Action action) {

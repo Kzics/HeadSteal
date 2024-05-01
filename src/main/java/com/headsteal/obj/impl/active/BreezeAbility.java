@@ -1,14 +1,15 @@
 package com.headsteal.obj.impl.active;
 
 import com.headsteal.obj.HeadAbility;
+import org.bukkit.entity.Breeze;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.WindCharge;
 import org.bukkit.event.block.Action;
 
-public class BlazeAbility extends HeadAbility {
-    public BlazeAbility() {
-        super(EntityType.BLAZE);
+public class BreezeAbility extends HeadAbility {
+    public BreezeAbility() {
+        super(EntityType.BREEZE);
     }
 
     @Override
@@ -39,9 +40,8 @@ public class BlazeAbility extends HeadAbility {
             player.sendMessage("Ability is on cooldown!");
             return;
         }
-
-        Fireball fireball = player.launchProjectile(Fireball.class);
-        fireball.setDirection(player.getLocation().getDirection());
-        fireball.setYield(3);
+        WindCharge windCharge = player.launchProjectile(WindCharge.class);
+        windCharge.setDirection(player.getLocation().getDirection());
+        windCharge.setYield(3);
     }
 }
