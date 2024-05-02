@@ -5,16 +5,32 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class HeadsManager {
 
 
     private final HashMap<EntityType, HeadAbility> abilities;
+    private final List<UUID> striderPlayers;
 
     public HeadsManager(){
         this.abilities = new HashMap<>();
+        this.striderPlayers = new ArrayList<>();
+    }
+
+    public void addStriderPlayer(UUID uuid){
+        striderPlayers.add(uuid);
+    }
+
+    public void removeStriderPlayer(UUID uuid){
+        striderPlayers.remove(uuid);
+    }
+
+    public boolean isStriderPlayer(UUID uuid){
+        return striderPlayers.contains(uuid);
     }
 
     public EntityType isHead(ItemStack itemStack){

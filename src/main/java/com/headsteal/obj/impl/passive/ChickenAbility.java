@@ -18,9 +18,14 @@ public class ChickenAbility extends HeadAbility {
     }
 
     @Override
+    public String getDescription() {
+        return "Allows player to glide";
+    }
+
+    @Override
     public void apply(Player player) {
         PotionEffect effect = new PotionEffect(PotionEffectType.SLOW_FALLING, 1000000, 2, false, false, false);
-        player.getActivePotionEffects().add(effect);
+        player.addPotionEffect(effect);
     }
 
     @Override

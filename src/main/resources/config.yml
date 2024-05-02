@@ -1,0 +1,7 @@
+heads:
+  name: "{mob}'s Head"
+  lore:
+    - "This head can be retrieved by killing a {mob}."
+    - "Description: {description}"
+
+cooldown-message: "Ability on cooldown!"

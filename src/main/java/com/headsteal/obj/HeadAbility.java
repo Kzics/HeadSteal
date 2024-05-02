@@ -27,6 +27,7 @@ public abstract class HeadAbility {
     public abstract void remove(Player player);
     public abstract void onPlayerHit(Player attacker, Player target);
     public abstract void onInteract(Player player, Action action);
+    public abstract String getDescription();
 
     protected boolean checkCooldown(Player player) {
         UUID playerId = player.getUniqueId();

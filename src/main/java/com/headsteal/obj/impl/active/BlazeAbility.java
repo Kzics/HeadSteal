@@ -17,6 +17,11 @@ public class BlazeAbility extends HeadAbility {
     }
 
     @Override
+    public String getDescription() {
+        return "Shoots a fireball";
+    }
+
+    @Override
     public void apply(Player player) {
 
     }
@@ -35,7 +40,7 @@ public class BlazeAbility extends HeadAbility {
     public void onInteract(Player player, Action action) {
         if (!(action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK))) return;
 
-        if(checkCooldown(player)) {
+        if(!checkCooldown(player)) {
             player.sendMessage("Ability is on cooldown!");
             return;
         }

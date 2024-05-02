@@ -3,7 +3,7 @@ package com.headsteal;
 import com.headsteal.listeners.HeadListeners;
 import com.headsteal.obj.impl.active.*;
 import com.headsteal.obj.impl.passive.*;
-import org.bukkit.entity.EntityType;
+
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,12 +11,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.*;
+
 public class Main extends JavaPlugin implements Listener {
 
     public static Main instance;
     private HeadsManager headsManager;
     @Override
     public void onEnable() {
+        if(!getDataFolder().exists()) getDataFolder().mkdir();
+
+        try {
+            if(!new File(getDataFolder(), "config.yml").exists()) copyStreamToFile(getResource("config.yml"), new File(getDataFolder(), "config.yml"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         instance = this;
         headsManager = new HeadsManager();
         headsManager.addAbilities(
@@ -36,13 +46,28 @@ public class Main extends JavaPlugin implements Listener {
                 new EndermanAbility(),
                 new SpiderAbility(),
                 new WardenAbility(),
-                new WitherAbility());
+                new WitherAbility(),
+                new SlimeAbility(),
+                new StriderAbility());
 
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new HeadListeners(headsManager), this);
     }
 
 
+    public void copyStreamToFile(InputStream source, File destination) throws IOException {
+        try (OutputStream out = new FileOutputStream(destination)) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = source.read(buffer)) > 0) {
+                out.write(buffer, 0, length);
+            }
+        } finally {
+            if (source != null) {
+                source.close();
+            }
+        }
+    }
     public HeadsManager getHeadsManager() {
         return headsManager;
     }
@@ -55,7 +80,6 @@ public class Main extends JavaPlugin implements Listener {
         if (killer != null) {
             HeadItem head = new HeadItem(entity.getType());
             event.getDrops().add(head);
-            //killer.getInventory().addItem(head);
         }
     }
 

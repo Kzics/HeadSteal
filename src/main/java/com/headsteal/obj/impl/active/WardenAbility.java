@@ -22,6 +22,11 @@ public class WardenAbility extends HeadAbility {
     }
 
     @Override
+    public String getDescription() {
+        return "Shoots a sonic boom";
+    }
+
+    @Override
     public void apply(Player player) {
 
     }
@@ -41,7 +46,7 @@ public class WardenAbility extends HeadAbility {
         if(!player.isSneaking()) return;
         if(!action.equals(Action.RIGHT_CLICK_AIR)) return;
 
-        if(checkCooldown(player)) {
+        if(!checkCooldown(player)) {
             player.sendMessage("Ability is on cooldown!");
             return;
         }

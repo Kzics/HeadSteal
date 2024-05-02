@@ -18,14 +18,21 @@ public class FrogAbility extends HeadAbility {
     }
 
     @Override
+    public String getDescription() {
+        return "Gives player Jump Boost Effect";
+    }
+
+    @Override
     public void apply(Player player) {
-        PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP, 1000000, 3);
-        player.getActivePotionEffects().add(potionEffect);
+        PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP_BOOST, 1000000, 3);
+        player.addPotionEffect(potionEffect);
+
+        System.out.println("lol");
     }
 
     @Override
     public void remove(Player player) {
-        player.removePotionEffect(PotionEffectType.JUMP);
+        player.removePotionEffect(PotionEffectType.JUMP_BOOST);
     }
 
     @Override

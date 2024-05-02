@@ -17,6 +17,11 @@ public class RavengerAbility extends HeadAbility {
     }
 
     @Override
+    public String getDescription() {
+        return "Knocks back player from 20 blocks on hit";
+    }
+
+    @Override
     public void apply(Player player) {
 
     }

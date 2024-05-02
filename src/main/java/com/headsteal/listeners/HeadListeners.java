@@ -3,6 +3,8 @@ package com.headsteal.listeners;
 import com.headsteal.HeadItem;
 import com.headsteal.HeadsManager;
 import com.headsteal.obj.HeadAbility;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,9 +13,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 
 public class HeadListeners implements Listener {
 
@@ -43,7 +47,7 @@ public class HeadListeners implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event){
-        ItemStack item = event.getItem();
+        ItemStack item = event.getPlayer().getInventory().getHelmet();
         if(item == null) return;
         if(item.getItemMeta() == null) return;
 
@@ -86,6 +90,20 @@ public class HeadListeners implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onWalkOnLava(PlayerMoveEvent event){
+        Player player = event.getPlayer();
+        if(!headsManager.isStriderPlayer(player.getUniqueId())) return;
+
+        Block block = player.getLocation().getBlock();
+
+        if (block.getType() == Material.LAVA) {
+            Vector velocity = player.getVelocity();
+            velocity.setY(0.1);
+            player.setVelocity(velocity);
         }
     }
 

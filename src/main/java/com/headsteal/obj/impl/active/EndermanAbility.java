@@ -4,6 +4,7 @@ import com.headsteal.obj.HeadAbility;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -17,6 +18,11 @@ public class EndermanAbility extends HeadAbility {
     @Override
     protected boolean isPassive() {
         return false;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Teleports you ramdomly in a range of 20 blocks";
     }
 
     @Override
@@ -38,7 +44,7 @@ public class EndermanAbility extends HeadAbility {
         if(!player.isSneaking()) return;
         if(!action.equals(Action.RIGHT_CLICK_AIR)) return;
 
-        if(checkCooldown(player)) {
+        if(!checkCooldown(player)) {
             player.sendMessage("Ability is on cooldown!");
             return;
         }

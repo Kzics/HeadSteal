@@ -11,6 +11,11 @@ public class BatAbility extends HeadAbility {
     }
 
     @Override
+    public String getDescription() {
+        return "Allows player to fly";
+    }
+
+    @Override
     protected boolean isPassive() {
         return true;
     }

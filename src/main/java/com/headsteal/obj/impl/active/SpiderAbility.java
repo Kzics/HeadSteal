@@ -21,6 +21,11 @@ public class SpiderAbility extends HeadAbility {
     }
 
     @Override
+    public String getDescription() {
+        return "Creates cobwebs in front of you";
+    }
+
+    @Override
     public void apply(Player player) {
 
     }
@@ -42,7 +47,7 @@ public class SpiderAbility extends HeadAbility {
                 Location location = player.getEyeLocation();
                 Vector direction = location.getDirection().normalize();
 
-                Block targetBlock = location.add(direction.multiply(2)).getBlock();
+                Block targetBlock = location.add(direction.multiply(3)).getBlock();
                 targetBlock.setType(Material.COBWEB);
                 targetBlock.getRelative(BlockFace.NORTH).setType(Material.COBWEB);
                 targetBlock.getRelative(BlockFace.EAST).setType(Material.COBWEB);

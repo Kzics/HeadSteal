@@ -18,15 +18,20 @@ public class PiglinBruteAbility extends HeadAbility {
     }
 
     @Override
+    public String getDescription() {
+        return "Gives player Strength 3 Effect";
+    }
+
+    @Override
     public void apply(Player player) {
-        PotionEffect effect = new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000, 3, false, false, false);
-        player.getActivePotionEffects().add(effect);
+        PotionEffect effect = new PotionEffect(PotionEffectType.STRENGTH, 1000000, 3, false, false, false);
+        player.addPotionEffect(effect);
 
     }
 
     @Override
     public void remove(Player player) {
-        player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+        player.removePotionEffect(PotionEffectType.STRENGTH);
 
     }
 

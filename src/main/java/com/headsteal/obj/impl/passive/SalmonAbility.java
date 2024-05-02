@@ -18,9 +18,14 @@ public class SalmonAbility extends HeadAbility {
     }
 
     @Override
+    public String getDescription() {
+        return "Gives player Water Breathing Effect";
+    }
+
+    @Override
     public void apply(Player player) {
         PotionEffect potionEffect = new PotionEffect(PotionEffectType.WATER_BREATHING, 1000000, 3);
-        player.getActivePotionEffects().add(potionEffect);
+        player.addPotionEffect(potionEffect);
     }
 
     @Override

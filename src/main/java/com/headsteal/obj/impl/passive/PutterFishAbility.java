@@ -23,6 +23,11 @@ public class PutterFishAbility extends HeadAbility {
     }
 
     @Override
+    public String getDescription() {
+        return "Gives player Nausea Effect";
+    }
+
+    @Override
     public void apply(Player player) {
 
     }
@@ -33,7 +38,7 @@ public class PutterFishAbility extends HeadAbility {
 
     @Override
     public void onPlayerHit(Player attacker, Player target) {
-        PotionEffect potionEffect = new PotionEffect(PotionEffectType.CONFUSION, 200, 2);
+        PotionEffect potionEffect = new PotionEffect(PotionEffectType.NAUSEA, 200, 2);
         target.getActivePotionEffects().add(potionEffect);
     }
 
