@@ -1,6 +1,7 @@
 package com.headsteal.obj.impl.active;
 
 import com.headsteal.obj.HeadAbility;
+import com.headsteal.utils.ColorsUtil;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.EntityType;
@@ -40,12 +41,14 @@ public class EnderDragonAbility extends HeadAbility {
 
     @Override
     public void onInteract(Player player, Action action) {
-        if (!(action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK))) return;
+        if (!player.isSneaking()) return;
 
-        if(!checkCooldown(player)) {
-            player.sendMessage("Ability is on cooldown!");
+
+        if (!checkCooldown(player)) {
+            player.sendMessage(ColorsUtil.translate.apply("&cAbility is on cooldown!"));
             return;
         }
+
         final int distance = 10;
         Vector direction = player.getEyeLocation().getDirection().normalize();
 
@@ -54,5 +57,4 @@ public class EnderDragonAbility extends HeadAbility {
             player.getWorld().spawnParticle(Particle.DRAGON_BREATH, location, 10);
         }
     }
-
 }

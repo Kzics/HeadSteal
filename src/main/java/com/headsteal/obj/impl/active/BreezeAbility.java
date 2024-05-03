@@ -1,6 +1,7 @@
 package com.headsteal.obj.impl.active;
 
 import com.headsteal.obj.HeadAbility;
+import com.headsteal.utils.ColorsUtil;
 import org.bukkit.entity.Breeze;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -39,12 +40,14 @@ public class BreezeAbility extends HeadAbility {
 
     @Override
     public void onInteract(Player player, Action action) {
-        if (!(action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK))) return;
+        if(!player.isSneaking()) return;
+
 
         if(!checkCooldown(player)) {
-            player.sendMessage("Ability is on cooldown!");
+            player.sendMessage(ColorsUtil.translate.apply("&cAbility is on cooldown!"));
             return;
         }
+
         WindCharge windCharge = player.launchProjectile(WindCharge.class);
         windCharge.setDirection(player.getLocation().getDirection());
         windCharge.setYield(3);

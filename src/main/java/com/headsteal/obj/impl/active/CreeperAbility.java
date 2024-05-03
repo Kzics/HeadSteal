@@ -1,6 +1,7 @@
 package com.headsteal.obj.impl.active;
 
 import com.headsteal.obj.HeadAbility;
+import com.headsteal.utils.ColorsUtil;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
@@ -38,15 +39,17 @@ public class CreeperAbility extends HeadAbility {
 
     @Override
     public void onInteract(Player player, Action action) {
-        if (!(action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK))) return;
+        if (!player.isSneaking()) return;
 
-        if(!checkCooldown(player)) {
-            player.sendMessage("Ability is on cooldown!");
+        if (!checkCooldown(player)) {
+            player.sendMessage(ColorsUtil.translate.apply("&cAbility is on cooldown!"));
             return;
         }
+
 
         TNTPrimed tnt = player.getWorld().spawn(player.getLocation(), TNTPrimed.class);
         tnt.setFuseTicks(40);
         tnt.setVelocity(player.getLocation().getDirection().multiply(1.5));
+
     }
 }

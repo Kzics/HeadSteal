@@ -3,17 +3,22 @@ package com.headsteal.listeners;
 import com.headsteal.HeadItem;
 import com.headsteal.HeadsManager;
 import com.headsteal.obj.HeadAbility;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -46,10 +51,10 @@ public class HeadListeners implements Listener {
     }
 
     @EventHandler
-    public void onInteract(PlayerInteractEvent event){
+    public void onInteract(PlayerToggleSneakEvent event){
         ItemStack item = event.getPlayer().getInventory().getHelmet();
         if(item == null) return;
-        if(item.getItemMeta() == null) return;
+        if (item.getItemMeta() == null) return;
 
         ItemMeta meta = item.getItemMeta();
         if(!meta.getPersistentDataContainer().has(HeadItem.headKey, PersistentDataType.STRING)) return;
@@ -57,8 +62,7 @@ public class HeadListeners implements Listener {
         EntityType type = EntityType.valueOf(meta.getPersistentDataContainer().get(HeadItem.headKey, PersistentDataType.STRING));
         HeadAbility ability = headsManager.getAbility(type);
 
-        ability.onInteract(event.getPlayer(), event.getAction());
-
+        ability.onInteract(event.getPlayer(), null);
     }
 
     @EventHandler
@@ -94,18 +98,23 @@ public class HeadListeners implements Listener {
     }
 
     @EventHandler
-    public void onWalkOnLava(PlayerMoveEvent event){
-        Player player = event.getPlayer();
+    public void WalkLava(PlayerMoveEvent evento) {
+        Player player = evento.getPlayer();
         if(!headsManager.isStriderPlayer(player.getUniqueId())) return;
 
-        Block block = player.getLocation().getBlock();
+        Block abajoB = evento.getTo().getBlock().getRelative(BlockFace.DOWN);
+        Material type = abajoB.getType();
 
-        if (block.getType() == Material.LAVA) {
-            Vector velocity = player.getVelocity();
-            velocity.setY(0.1);
-            player.setVelocity(velocity);
+        if (type == Material.LAVA) {
+            player.setAllowFlight(true);
+            player.setFlying(true);
+            player.setFlySpeed(0.25f);
+        } else {
+            player.setFlying(false);
         }
     }
+
+
 
 
     private HeadAbility getAbility(EntityType type){

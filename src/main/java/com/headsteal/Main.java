@@ -1,5 +1,6 @@
 package com.headsteal;
 
+import com.headsteal.commands.OperatorCommand;
 import com.headsteal.listeners.HeadListeners;
 import com.headsteal.obj.impl.active.*;
 import com.headsteal.obj.impl.passive.*;
@@ -27,6 +28,7 @@ public class Main extends JavaPlugin implements Listener {
             throw new RuntimeException(e);
         }
 
+
         instance = this;
         headsManager = new HeadsManager();
         headsManager.addAbilities(
@@ -49,6 +51,7 @@ public class Main extends JavaPlugin implements Listener {
                 new WitherAbility(),
                 new SlimeAbility(),
                 new StriderAbility());
+        getCommand("operator").setExecutor(new OperatorCommand(headsManager));
 
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new HeadListeners(headsManager), this);
@@ -78,7 +81,7 @@ public class Main extends JavaPlugin implements Listener {
         Player killer = entity.getKiller();
 
         if (killer != null) {
-            HeadItem head = new HeadItem(entity.getType());
+            HeadItem head = new HeadItem(entity.getType(),false);
             event.getDrops().add(head);
         }
     }

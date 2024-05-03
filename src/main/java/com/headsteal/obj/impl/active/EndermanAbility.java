@@ -1,6 +1,7 @@
 package com.headsteal.obj.impl.active;
 
 import com.headsteal.obj.HeadAbility;
+import com.headsteal.utils.ColorsUtil;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
@@ -41,13 +42,15 @@ public class EndermanAbility extends HeadAbility {
 
     @Override
     public void onInteract(Player player, Action action) {
-        if(!player.isSneaking()) return;
-        if(!action.equals(Action.RIGHT_CLICK_AIR)) return;
+        if (!player.isSneaking()) return;
 
-        if(!checkCooldown(player)) {
-            player.sendMessage("Ability is on cooldown!");
+
+
+        if (!checkCooldown(player)) {
+            player.sendMessage(ColorsUtil.translate.apply("&cAbility is on cooldown!"));
             return;
         }
+
         World world = player.getWorld();
         Vector dir = player.getLocation().getDirection().normalize();
         Location teleportLocation = player.getLocation().add(dir.multiply(20));

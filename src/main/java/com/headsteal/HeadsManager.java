@@ -49,6 +49,10 @@ public class HeadsManager {
         }
     }
 
+    public HashMap<EntityType, HeadAbility> getAbilities() {
+        return abilities;
+    }
+
     public void addAbility(EntityType type, HeadAbility ability){
         abilities.put(type, ability);
     }

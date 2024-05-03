@@ -1,7 +1,7 @@
 heads:
-  name: "{mob}'s Head"
+  name: "&6&l{mob}'s Head &e&o✦"
   lore:
-    - "This head can be retrieved by killing a {mob}."
-    - "Description: {description}"
+    - "&7&oObtained by slaying a &6&l{mob}&7&o."
+    - "&a&lDescription: &r&2{description}"
+    - "&d✧ &5A rare and precious trophy &d✧"
 
-cooldown-message: "Ability on cooldown!"

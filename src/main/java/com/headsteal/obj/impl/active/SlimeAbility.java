@@ -4,6 +4,7 @@ import com.headsteal.obj.HeadAbility;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 
@@ -39,16 +40,16 @@ public class SlimeAbility extends HeadAbility {
 
     @Override
     public void onInteract(Player player, Action action) {
-        if (!(action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.LEFT_CLICK_AIR))) return;
+        if (!player.isSneaking()) return;
 
 
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_SCALE);
         if (attribute == null) return;
 
-        if(action.equals(Action.RIGHT_CLICK_AIR)){
+        if (action.equals(Action.RIGHT_CLICK_AIR)) {
             attribute.setBaseValue(attribute.getBaseValue() + 1);
-        }else{
-            if(attribute.getBaseValue() > 1) attribute.setBaseValue(attribute.getBaseValue() - 1);
+        } else {
+            if (attribute.getBaseValue() > 1) attribute.setBaseValue(attribute.getBaseValue() - 1);
         }
     }
 }

@@ -2,3 +2,8 @@ main: com.headsteal.Main
 name: HeadSteal
 version: 1.0
 api-version: 1.13
+commands:
+  operator:
+    description: Give a player the operator permission
+    usage: /operator <player>
+    permission: headsteal.operator

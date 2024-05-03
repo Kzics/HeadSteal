@@ -1,6 +1,7 @@
 package com.headsteal.obj.impl.active;
 
 import com.headsteal.obj.HeadAbility;
+import com.headsteal.utils.ColorsUtil;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -43,14 +44,13 @@ public class WardenAbility extends HeadAbility {
 
     @Override
     public void onInteract(Player player, Action action) {
-        if(!player.isSneaking()) return;
-        if(!action.equals(Action.RIGHT_CLICK_AIR)) return;
+        if (!player.isSneaking()) return;
 
-        if(!checkCooldown(player)) {
-            player.sendMessage("Ability is on cooldown!");
+
+        if (!checkCooldown(player)) {
+            player.sendMessage(ColorsUtil.translate.apply("&cAbility is on cooldown!"));
             return;
         }
-
         Location start = player.getEyeLocation();
         Location end = start.clone().add(start.getDirection().multiply(10));
         Vector direction = end.clone().subtract(start).toVector().normalize();
@@ -64,8 +64,9 @@ public class WardenAbility extends HeadAbility {
             for (Entity entity : point.getWorld().getNearbyEntities(point, radius, radius, radius)) {
                 if (entity instanceof Player) {
                     ((Player) entity).damage(damage);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,40,2));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 40, 2));
                 }
+
             }
         }
     }
