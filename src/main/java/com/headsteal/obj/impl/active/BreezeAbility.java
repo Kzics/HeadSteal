@@ -2,10 +2,7 @@ package com.headsteal.obj.impl.active;
 
 import com.headsteal.obj.HeadAbility;
 import com.headsteal.utils.ColorsUtil;
-import org.bukkit.entity.Breeze;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.WindCharge;
+import org.bukkit.entity.*;
 import org.bukkit.event.block.Action;
 
 public class BreezeAbility extends HeadAbility {
@@ -47,8 +44,8 @@ public class BreezeAbility extends HeadAbility {
             player.sendMessage(ColorsUtil.translate.apply("&cAbility is on cooldown!"));
             return;
         }
+        BreezeWindCharge windCharge = player.getWorld().spawn(player.getEyeLocation(), BreezeWindCharge.class);
 
-        WindCharge windCharge = player.launchProjectile(WindCharge.class);
         windCharge.setDirection(player.getLocation().getDirection());
         windCharge.setYield(3);
     }

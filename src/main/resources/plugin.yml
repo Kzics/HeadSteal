@@ -3,7 +3,7 @@ name: HeadSteal
 version: 1.0
 api-version: 1.13
 commands:
-  operator:
+  headop:
     description: Give a player the operator permission
     usage: /operator <player>
     permission: headsteal.operator

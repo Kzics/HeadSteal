@@ -1,7 +1,9 @@
 package com.headsteal.listeners;
 
+import com.headsteal.DeathAction;
 import com.headsteal.HeadItem;
 import com.headsteal.HeadsManager;
+import com.headsteal.Main;
 import com.headsteal.obj.HeadAbility;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,19 +12,17 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.util.Vector;
+
+import java.time.Instant;
 
 public class HeadListeners implements Listener {
 
@@ -116,6 +116,15 @@ public class HeadListeners implements Listener {
 
 
 
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event){
+        DeathAction action = DeathAction.valueOf(Main.instance.getConfig().getString("death-action"));
+        if(action.equals(DeathAction.SPECTATING)){
+            event.getEntity().setGameMode(org.bukkit.GameMode.SPECTATOR);
+        }else{
+            event.getEntity().ban("You died", Instant.MAX, "You died");
+        }
+    }
 
     private HeadAbility getAbility(EntityType type){
         return headsManager.getAbility(type);

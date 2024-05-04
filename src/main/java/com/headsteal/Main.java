@@ -51,7 +51,7 @@ public class Main extends JavaPlugin implements Listener {
                 new WitherAbility(),
                 new SlimeAbility(),
                 new StriderAbility());
-        getCommand("operator").setExecutor(new OperatorCommand(headsManager));
+        getCommand("headop").setExecutor(new OperatorCommand(headsManager));
 
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new HeadListeners(headsManager), this);
@@ -78,9 +78,11 @@ public class Main extends JavaPlugin implements Listener {
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         LivingEntity entity = event.getEntity();
+        if(entity.getKiller() == null) return;
+
         Player killer = entity.getKiller();
 
-        if (killer != null) {
+        if (killer != null && headsManager.getAbilities().containsKey(entity.getType())) {
             HeadItem head = new HeadItem(entity.getType(),false);
             event.getDrops().add(head);
         }

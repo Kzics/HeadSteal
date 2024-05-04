@@ -5,3 +5,5 @@ heads:
     - "&a&lDescription: &r&2{description}"
     - "&d✧ &5A rare and precious trophy &d✧"
 
+death-action: "SPECTATING" #SPECTATING OR BAN
+

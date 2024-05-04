@@ -46,10 +46,7 @@ public class SlimeAbility extends HeadAbility {
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_SCALE);
         if (attribute == null) return;
 
-        if (action.equals(Action.RIGHT_CLICK_AIR)) {
-            attribute.setBaseValue(attribute.getBaseValue() + 1);
-        } else {
-            if (attribute.getBaseValue() > 1) attribute.setBaseValue(attribute.getBaseValue() - 1);
-        }
+        attribute.setBaseValue(attribute.getBaseValue() + 1);
+        if(attribute.getBaseValue() > 6) attribute.setBaseValue(1);
     }
 }
