@@ -30,6 +30,7 @@ public class OperatorCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
+
         try {
             EntityType type = EntityType.valueOf(strings[0].toUpperCase());
             ((Player) commandSender).getInventory().addItem(new HeadItem(type,false));

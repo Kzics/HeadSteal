@@ -5,8 +5,10 @@ import com.headsteal.HeadItem;
 import com.headsteal.HeadsManager;
 import com.headsteal.Main;
 import com.headsteal.obj.HeadAbility;
+import com.headsteal.utils.ColorsUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
@@ -20,6 +22,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.time.Instant;
@@ -118,6 +121,17 @@ public class HeadListeners implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event){
+        ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta meta = (SkullMeta) playerHead.getItemMeta();
+        meta.setDisplayName(ColorsUtil.translate.apply("&c" + event.getEntity().getName() + "'s Head"));
+
+        meta.getPersistentDataContainer().set(new NamespacedKey(Main.instance,"dead"), PersistentDataType.STRING, event.getEntity().getUniqueId().toString());
+
+        meta.setOwnerProfile(event.getEntity().getPlayerProfile());
+        playerHead.setItemMeta(meta);
+
+        event.getDrops().add(playerHead);
+
         DeathAction action = DeathAction.valueOf(Main.instance.getConfig().getString("death-action"));
         if(action.equals(DeathAction.SPECTATING)){
             event.getEntity().setGameMode(org.bukkit.GameMode.SPECTATOR);
