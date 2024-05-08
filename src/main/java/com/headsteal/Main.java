@@ -1,6 +1,7 @@
 package com.headsteal;
 
 import com.headsteal.commands.OperatorCommand;
+import com.headsteal.database.PlayerDeathDAO;
 import com.headsteal.listeners.HeadListeners;
 import com.headsteal.obj.impl.active.*;
 import com.headsteal.obj.impl.passive.*;
@@ -13,11 +14,13 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
+import java.sql.SQLException;
 
 public class Main extends JavaPlugin implements Listener {
 
     public static Main instance;
     private HeadsManager headsManager;
+    private PlayerDeathDAO playerDeathDAO;
     @Override
     public void onEnable() {
         if(!getDataFolder().exists()) getDataFolder().mkdir();
@@ -28,7 +31,12 @@ public class Main extends JavaPlugin implements Listener {
             throw new RuntimeException(e);
         }
 
+        try {
+            playerDeathDAO = new PlayerDeathDAO("jdbc:h2:" + getDataFolder().getAbsolutePath() + "/player_deaths;TRACE_LEVEL_FILE=0;TRACE_LEVEL_SYSTEM_OUT=0");
 
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         instance = this;
         headsManager = new HeadsManager();
         headsManager.addAbilities(
@@ -88,4 +96,7 @@ public class Main extends JavaPlugin implements Listener {
         }
     }
 
+    public PlayerDeathDAO getPlayerDeathDAO() {
+        return playerDeathDAO;
+    }
 }

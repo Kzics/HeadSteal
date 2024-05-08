@@ -4,9 +4,7 @@ import com.headsteal.obj.HeadAbility;
 import com.headsteal.utils.ColorsUtil;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.block.Action;
 import org.bukkit.util.Vector;
 
@@ -51,22 +49,11 @@ public class EnderDragonAbility extends HeadAbility {
             return;
         }
 
-        final int distance = 25;
-        Vector direction = player.getEyeLocation().getDirection().normalize();
+        Location location = player.getEyeLocation();
 
-        for (int i = 0; i < distance; i++) {
-            Location location = player.getEyeLocation().add(direction.multiply(i));
-            player.getWorld().spawnParticle(Particle.DRAGON_BREATH, location, 20);
-
-            Collection<Entity> nearbyEntities = location.getWorld().getNearbyEntities(location, 0.5, 0.5, 0.5);
-
-            for (Entity entity : nearbyEntities) {
-                if (entity instanceof Player) {
-                    Player target = (Player) entity;
-
-                    target.damage(5.0);
-                }
-            }
-        }
+        DragonFireball fireball = player.launchProjectile(DragonFireball.class, location.getDirection().multiply(2));
+        fireball.setYield(3);
+        fireball.setDirection(location.getDirection());
     }
+
 }

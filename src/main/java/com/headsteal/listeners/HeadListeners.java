@@ -6,15 +6,14 @@ import com.headsteal.HeadsManager;
 import com.headsteal.Main;
 import com.headsteal.obj.HeadAbility;
 import com.headsteal.utils.ColorsUtil;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -25,7 +24,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.sql.SQLException;
 import java.time.Instant;
+import java.util.UUID;
 
 public class HeadListeners implements Listener {
 
@@ -117,8 +118,34 @@ public class HeadListeners implements Listener {
         }
     }
 
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event){
+        ItemStack itemStack = event.getItemInHand();
+        if(itemStack.getItemMeta() == null) return;
 
+        ItemMeta meta = itemStack.getItemMeta();
+        if(!meta.getPersistentDataContainer().has(new NamespacedKey(Main.instance,"dead"), PersistentDataType.STRING)) return;
+        UUID uuid = UUID.fromString(meta.getPersistentDataContainer().get(new NamespacedKey(Main.instance,"dead"), PersistentDataType.STRING));
 
+        try {
+            if(Main.instance.getPlayerDeathDAO().isPlayerDead(uuid)){
+                Main.instance.getPlayerDeathDAO().removePlayerDeath(uuid);
+
+                Player player = Bukkit.getPlayer(uuid);
+                player.teleport(event.getBlock().getLocation().add(0.5,1,0.5));
+                player.setGameMode(GameMode.SURVIVAL);
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+
+                Bukkit.getServer().getBannedPlayers().remove(offlinePlayer);
+                player.sendMessage(ColorsUtil.translate.apply("&aPlayer has revived !"));
+                player.getInventory().remove(itemStack);
+
+                event.setCancelled(true);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @EventHandler
     public void onDeath(PlayerDeathEvent event){
         ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
@@ -137,6 +164,11 @@ public class HeadListeners implements Listener {
             event.getEntity().setGameMode(org.bukkit.GameMode.SPECTATOR);
         }else{
             event.getEntity().ban("You died", Instant.MAX, "You died");
+        }
+        try {
+            Main.instance.getPlayerDeathDAO().insertPlayerDeath(event.getEntity().getUniqueId());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

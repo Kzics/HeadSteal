@@ -25,6 +25,7 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.20.6-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.mojang</groupId>
@@ -32,6 +33,42 @@
             <version>1.5.21</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.220</version> <!-- Utilisez la version la plus récente -->
+        </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>com.h2database:h2</artifact>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                            <excludes>
+                                <!-- Exclure les classes que vous ne voulez pas -->
+                                <exclude>path/to/unwanted/class/*.class</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

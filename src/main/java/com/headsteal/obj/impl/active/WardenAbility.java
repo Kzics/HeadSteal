@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.potion.PotionEffect;
@@ -62,11 +63,12 @@ public class WardenAbility extends HeadAbility {
             double radius = 1.0;
             double damage = 5;
             for (Entity entity : point.getWorld().getNearbyEntities(point, radius, radius, radius)) {
-                if (entity instanceof Player) {
-                    ((Player) entity).damage(damage);
+                if (entity instanceof LivingEntity) {
+                    if(entity.getUniqueId().equals(player.getUniqueId())) continue;
+
+                    ((LivingEntity) entity).damage(damage);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 40, 2));
                 }
-
             }
         }
     }
